@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Prompt Studio — Generador visual</title>
+<style>
+:root{--bg:#101112;--panel:#17191b;--panel2:#1d2023;--line:#2b2f33;--text:#f1f2f3;--muted:#a0a6ac;--soft:#c8cdd1;--accent:#d9e0e5;--accentText:#101214;--danger:#ffb4ab;--ok:#b8e6c1;--radius:16px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #d9e0e5;outline-offset:2px}
+.app{min-height:100vh;display:grid;grid-template-columns:250px minmax(0,1fr)}aside{border-right:1px solid var(--line);padding:24px 16px;display:flex;flex-direction:column;gap:24px;background:#131516}.brand{display:flex;align-items:center;gap:11px;padding:0 8px}.brandmark{width:34px;height:34px;border:1px solid #596168;border-radius:11px;display:grid;place-items:center;font-weight:800;font-size:15px}.brand strong{display:block;letter-spacing:.02em}.brand small{color:var(--muted);font-size:11px}.nav-label{font-size:10px;letter-spacing:.13em;color:#7e858b;text-transform:uppercase;padding:0 10px;margin-bottom:7px}.nav{display:grid;gap:4px}.nav button{border:1px solid transparent;background:transparent;color:#b9bec3;text-align:left;border-radius:10px;padding:10px 11px;display:flex;align-items:center;gap:10px;font-size:13px}.nav button:hover{background:#1c1f21;color:white}.nav button.active{background:#292d30;border-color:#3b4146;color:#fff}.nav .ico{width:20px;text-align:center;color:#d0d5d9;font-size:14px}.side-note{margin-top:auto;border:1px solid var(--line);background:#17191b;border-radius:12px;padding:13px;color:var(--muted);font-size:12px}.side-note strong{display:block;color:var(--soft);font-size:12px;margin-bottom:4px}
+main{min-width:0;padding:28px clamp(16px,3vw,42px) 48px;max-width:1500px;width:100%;margin:auto}.topbar{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:28px}.eyebrow{font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}h1{font-size:clamp(25px,3vw,36px);letter-spacing:-.045em;line-height:1.1;margin:8px 0 9px}p.lead{color:var(--muted);margin:0;max-width:680px}.status{border:1px solid var(--line);border-radius:999px;padding:7px 10px;color:var(--muted);font-size:11px;white-space:nowrap}.mobile-menu{display:none}.layout{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(310px,.85fr);gap:18px;align-items:start}.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}.panel-head{padding:19px 20px 15px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:12px}.panel-head h2{font-size:15px;margin:0;letter-spacing:-.015em}.panel-head p{font-size:12px;color:var(--muted);margin:4px 0 0}.panel-body{padding:20px}.stepbar{display:flex;gap:7px;margin-bottom:20px}.stepbar span{height:3px;border-radius:8px;background:#353a3f;flex:1}.stepbar span.on{background:#d8dee3}.step-title{font-size:21px;letter-spacing:-.03em;margin:0 0 5px}.step-desc{font-size:13px;color:var(--muted);margin:0 0 20px}.field{margin:0 0 16px}.field label{display:block;font-size:12px;color:#d2d6da;margin-bottom:7px}.hint{font-size:11px;color:#858d94;margin-top:5px}.field input,.field select,.field textarea,.api-config input{width:100%;border:1px solid #34393e;background:#111314;color:var(--text);border-radius:10px;padding:11px 12px;min-height:43px}.field textarea{min-height:92px;resize:vertical}.field input::placeholder,.field textarea::placeholder{color:#686f75}.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}.chips{display:flex;flex-wrap:wrap;gap:7px}.chip{border:1px solid #3a4045;background:#1c1f22;color:#c7ccd0;border-radius:999px;padding:7px 10px;font-size:11px}.chip.selected{background:#dce2e6;color:#141719;border-color:#dce2e6}.btnrow{display:flex;gap:9px;justify-content:space-between;margin-top:22px}.btn{border:1px solid #3b4146;background:#202326;color:#e8ebed;border-radius:10px;padding:10px 14px;font-size:12px;font-weight:600}.btn:hover{background:#2a2e32}.btn.primary{background:var(--accent);color:var(--accentText);border-color:var(--accent)}.btn.primary:hover{background:#fff}.btn.ghost{background:transparent}.btn:disabled{opacity:.35;cursor:not-allowed}.result-box{background:#111314;border:1px solid #34393e;border-radius:12px;padding:15px;min-height:300px;white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px;color:#d6dade;line-height:1.7}.result-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.mini{font-size:11px;color:var(--muted)}.output-label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#92999f;margin-bottom:10px}.preview{display:none;margin-top:14px;border:1px solid var(--line);border-radius:12px;overflow:hidden}.preview img{display:block;width:100%;height:auto}.alert{border:1px solid #4a4030;background:#211d16;color:#d8c7a9;border-radius:10px;padding:12px;font-size:11px;line-height:1.6;margin-top:13px}.success{color:var(--ok)}.step-pill{font-size:11px;color:var(--muted)}.hidden{display:none!important}.mobile-nav{display:none}.api-config{display:grid;gap:10px;margin-top:14px}.api-config label{font-size:11px;color:var(--muted)}.footer{color:#727980;font-size:11px;margin-top:18px}.divider{height:1px;background:var(--line);margin:18px 0}
+@media(max-width:1050px){.app{grid-template-columns:220px minmax(0,1fr)}.layout{grid-template-columns:1fr}.result-box{min-height:240px}}
+@media(max-width:720px){.app{display:block}aside{display:none}main{padding:16px 13px 35px}.topbar{margin-bottom:22px;align-items:flex-start}.mobile-menu{display:block}.mobile-nav{display:flex;overflow:auto;gap:7px;padding:0 0 14px;margin-bottom:18px;scrollbar-width:thin}.mobile-nav button{white-space:nowrap;border:1px solid var(--line);background:#181a1c;color:#c4c9cd;border-radius:999px;padding:8px 11px;font-size:11px}.mobile-nav button.active{background:#dce2e6;color:#111;border-color:#dce2e6}.status{display:none}.panel-head,.panel-body{padding:16px}.two{grid-template-columns:1fr}.btnrow .btn{flex:1}.result-box{min-height:260px}h1{font-size:28px}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside>
+  <div class="brand"><div class="brandmark">P.</div><div><strong>Prompt Studio</strong><small>Generador visual</small></div></div>
+  <div><div class="nav-label">Herramientas</div><nav class="nav" id="sideNav"></nav></div>
+  <div class="side-note"><strong>Flujos guiados</strong>Elegí una función, completá los pasos y obtené un prompt listo para usar.</div>
+</aside>
+<main>
+  <header class="topbar"><div><div class="eyebrow">Creative tools / Prompt engineering</div><h1>Diseñá la imagen antes de generarla.</h1><p class="lead">Un generador de prompts visuales con formularios específicos, control de estilo y restricciones claras.</p></div><div class="status">● Generador local · API opcional</div></header>
+  <nav class="mobile-nav" id="mobileNav" aria-label="Funciones"></nav>
+  <div class="layout">
+    <section class="panel">
+      <div class="panel-head"><div><h2 id="moduleTitle">Carteles</h2><p id="moduleSubtitle">Construí una dirección visual precisa paso a paso.</p></div><span class="step-pill" id="stepCounter">Paso 1 de 4</span></div>
+      <div class="panel-body">
+        <div class="stepbar" id="stepbar"></div>
+        <form id="wizard" onsubmit="return false">
+          <div id="stepContent"></div>
+          <div class="btnrow"><button class="btn ghost" id="backBtn" type="button">← Atrás</button><button class="btn primary" id="nextBtn" type="button">Siguiente →</button></div>
+        </form>
+      </div>
+    </section>
+    <section class="panel">
+      <div class="panel-head"><div><h2>Prompt resultante</h2><p>Editable, copiable y listo para adaptar.</p></div><span class="step-pill" id="promptState">Borrador</span></div>
+      <div class="panel-body">
+        <div class="output-label">Prompt final</div>
+        <textarea class="result-box" id="output" aria-label="Prompt final" spellcheck="false" placeholder="Completá los pasos para construir el prompt…"></textarea>
+        <div class="result-actions"><button class="btn primary" id="copyBtn" type="button">Copiar prompt</button><button class="btn" id="refreshBtn" type="button">Actualizar</button><button class="btn" id="downloadBtn" type="button">Descargar .txt</button></div>
+        <div class="divider"></div>
+        <div class="output-label">Generación de imagen por API</div>
+        <p class="mini">La interfaz no contiene claves privadas. Para generar imágenes, configurá un endpoint backend propio que autentique la solicitud y llame a OpenAI Images API.</p>
+        <div class="api-config">
+          <div><label for="endpoint">URL del endpoint seguro (backend propio)</label><input id="endpoint" placeholder="https://tu-dominio.com/api/images" autocomplete="url"></div>
+          <div><label for="apiPrompt">Instrucción adicional para la generación (opcional)</label><input id="apiPrompt" placeholder="Ej.: priorizar formato vertical 4:5"></div>
+          <button class="btn" id="generateBtn" type="button">Solicitar generación de imagen</button>
+        </div>
+        <div id="apiMessage" class="alert">Modo preparado: requiere un backend que acepte POST JSON { "prompt": "..." } y devuelva { "imageUrl": "https://..." }. No pegues una clave API de OpenAI aquí.</div>
+        <div class="preview" id="preview"><img id="generatedImage" alt="Imagen generada por el endpoint configurado"></div>
+        <div class="footer">Los prompts se construyen en este navegador. No se guardan en un servidor por esta interfaz.</div>
+      </div>
+    </section>
+  </div>
+</main>
+</div>
+<script>
+const modules=[
+ {id:"poster",name:"Carteles",icon:"▤",sub:"Dirección gráfica, texto exacto y control anti-tópicos."},
+ {id:"product",name:"Producto",icon:"◈",sub:"Fotografía de producto, materiales y puesta en escena."},
+ {id:"exploded",name:"Exploded view",icon:"⊞",sub:"Despiece técnico con piezas separadas y relaciones espaciales."},
+ {id:"infographic",name:"Infografía",icon:"▦",sub:"Jerarquía de información, datos y lectura visual."},
+ {id:"packaging",name:"Packaging",icon:"▱",sub:"Diseño de envase, estructura, etiqueta y presentación."},
+ {id:"advertising",name:"Publicidad",icon:"✳",sub:"Pieza de campaña con mensaje, audiencia y llamada a la acción."},
+ {id:"vehicles",name:"Vehículos",icon:"⌁",sub:"Diseño automotriz, ángulo de cámara y entorno."},
+ {id:"characters",name:"Personajes",icon:"♙",sub:"Concept art, silueta, vestuario y rasgos distintivos."},
+ {id:"architecture",name:"Arquitectura e interiores",icon:"⌂",sub:"Espacio, materiales, luz y perspectiva."},
+ {id:"portrait",name:"Retratos",icon:"◉",sub:"Dirección de retrato, expresión, iluminación y encuadre."},
+ {id:"editorial",name:"Fotografía editorial",icon:"▧",sub:"Narrativa fotográfica, composición y acabado editorial."}
+];
+const styleCatalog=[
+["Swiss / International Typographic Style","Retícula precisa, sans-serif, jerarquía clara y espacio negativo."],
+["Bauhaus","Geometría básica, colores primarios y tipografía funcional."],
+["Constructivismo","Diagonales contundentes, contraste alto y composición dinámica."],
+["Art Nouveau","Curvas orgánicas, ornamentación lineal y rotulación integrada."],
+["Art Deco","Geometría elegante, simetría y acabado sofisticado."],
+["Minimalismo japonés","Mucho vacío, un elemento central y equilibrio asimétrico."],
+["Ukiyo-e","Contornos definidos, planos de color y composición inspirada en grabado japonés."],
+["Pop art","Colores saturados, contornos marcados y trama gráfica."],
+["Surrealismo","Asociaciones inesperadas, objetos imposibles y lógica onírica."],
+["Risografía","Dos o tres tintas planas, grano y ligero desregistro."],
+["Letterpress moderno","Tinta prensada, papel con cuerpo y pequeñas imperfecciones."],
+["Collage dadá","Recortes, capas y composición expresiva."],
+["Brutalismo gráfico","Tipografía pesada, bloques duros y ausencia de ornamento superfluo."],
+["Fotografía cinematográfica","Luz motivada, contraste controlado y composición narrativa."],
+["Fotografía de estudio premium","Iluminación precisa, materiales legibles y reflejos controlados."],
+["Render 3D fotorrealista","Geometría detallada, materiales físicamente plausibles y luz coherente."],
+["Ilustración técnica","Líneas limpias, proporciones legibles y anotaciones ordenadas."],
+["Editorial contemporáneo","Composición de revista, jerarquía tipográfica y acabado refinado."],
+["Low poly","Volúmenes facetados y geometría poligonal visible."],
+["Pixel art","Píxeles deliberados, cuadrícula visible y paleta limitada."],
+["Glitch art","Desplazamiento digital, errores RGB y distorsión controlada."],
+["Estilo personalizado","Describir la dirección visual con palabras propias."]
+];
+const fields={
+ common:[
+  {key:"format",label:"Formato y proporción",type:"select",options:["Vertical 4:5","Vertical 9:16","Cuadrado 1:1","Horizontal 16:9","Horizontal 3:2","Vertical 2:3","Personalizado"],value:"Vertical 4:5"},
+  {key:"purpose",label:"Objetivo / uso",type:"text",placeholder:"¿Para qué se utilizará esta imagen?",required:true},
+  {key:"subject",label:"Tema o elemento principal",type:"textarea",placeholder:"Describí el tema, objeto o escena principal…",required:true},
+  {key:"audience",label:"Público objetivo",type:"text",placeholder:"Opcional: audiencia, contexto o canal"}
+ ],
+ poster:[
+  {key:"posterType",label:"Tipo de cartel",type:"select",options:["Evento cultural","Concierto","Exposición","Festival","Promoción comercial","Cartel informativo","Campaña social","Otro"]},
+  {key:"topic",label:"Datos y contenido del cartel",type:"textarea",placeholder:"Fecha, hora, lugar, tema, detalles relevantes…",required:true},
+  {key:"exactText",label:"Texto exacto (incluí comillas si querés)",type:"textarea",placeholder:"Escribí todos los textos que deben aparecer. No se debe inventar ningún otro."},
+  {key:"style",label:"Estilo visual",type:"style"},
+  {key:"palette",label:"Tipografía y paleta",type:"text",placeholder:"Ej.: tipografía propia del estilo, rojo y negro sobre crema"},
+  {key:"avoid",label:"Elementos que se deben evitar",type:"textarea",placeholder:"Tópicos visuales, adornos, objetos o recursos no deseados…"}
+ ],
+ product:[
+  {key:"productType",label:"Tipo de producto y atributos",type:"textarea",placeholder:"Nombre, forma, tamaño, material, color, características que deben conservarse…",required:true},
+  {key:"shot",label:"Tipo de toma",type:"select",options:["Hero shot frontal","Tres cuartos","Vista superior","Macro de detalle","En uso / lifestyle","Packshot catálogo","Bodegón de campaña"]},
+  {key:"surface",label:"Materiales y superficie",type:"text",placeholder:"Ej.: aluminio cepillado, vidrio mate, papel texturado"},
+  {key:"lighting",label:"Iluminación",type:"select",options:["Softbox de estudio","Luz lateral dramática","Luz natural difusa","Contraluz controlado","High-key","Low-key","Personalizada"]},
+  {key:"background",label:"Fondo y contexto",type:"text",placeholder:"Ej.: fondo gris cálido sin elementos extra"},
+  {key:"details",label:"Detalles a preservar / evitar",type:"textarea",placeholder:"Logotipo, proporciones, etiquetas, reflejos, manos, objetos no deseados…"}
+ ],
+ exploded:[
+  {key:"object",label:"Objeto y conjunto",type:"textarea",placeholder:"¿Qué producto o sistema se descompone? ¿Cuáles son sus partes?",required:true},
+  {key:"axis",label:"Dirección de separación",type:"select",options:["Eje vertical","Eje horizontal","Eje longitudinal","Radial desde el centro","Según ensamblaje real","Personalizada"]},
+  {key:"view",label:"Vista técnica",type:"select",options:["Isométrica 3/4","Axonométrica","Frontal ortográfica","Lateral ortográfica","Vista superior","Perspectiva técnica"]},
+  {key:"labels",label:"Etiquetas y numeración",type:"select",options:["Sin etiquetas","Números discretos","Líneas guía y nombres","Llamadas técnicas numeradas"]},
+  {key:"parts",label:"Piezas, materiales y orden",type:"textarea",placeholder:"Enumerá componentes, materiales y orden de ensamblaje si se conoce."},
+  {key:"accuracy",label:"Nivel de precisión",type:"select",options:["Conceptual, visualmente plausible","Técnico, respetar geometría conocida","Basado en referencia adjunta"]},
+  {key:"avoid",label:"Evitar",type:"textarea",placeholder:"Piezas duplicadas, piezas flotantes sin alineación, conexiones inventadas…"}
+ ],
+ infographic:[
+  {key:"topic",label:"Tema y objetivo educativo",type:"textarea",placeholder:"Qué debe explicar y qué debería comprender el lector…",required:true},
+  {key:"facts",label:"Datos, hechos y texto que debe incluir",type:"textarea",placeholder:"Incluí solo datos verificados; no inventar cifras ni fuentes."},
+  {key:"structure",label:"Estructura",type:"select",options:["Pasos secuenciales","Comparación","Línea de tiempo","Anatomía / componentes","Mapa conceptual","Datos y gráficos","Guía de referencia"]},
+  {key:"density",label:"Densidad de información",type:"select",options:["Muy concisa","Equilibrada","Detallada"]},
+  {key:"style",label:"Estilo visual",type:"style"},
+  {key:"palette",label:"Paleta y tipografía",type:"text",placeholder:"Colores limitados, contraste y sistema tipográfico"},
+  {key:"avoid",label:"Evitar",type:"textarea",placeholder:"Texto ilegible, iconos decorativos, datos inventados, adornos superfluos…"}
+ ],
+ packaging:[
+  {key:"product",label:"Producto y posicionamiento",type:"textarea",placeholder:"Producto, categoría, marca, público y rango de posicionamiento…",required:true},
+  {key:"packageType",label:"Tipo de envase",type:"select",options:["Caja plegadiza","Botella","Lata","Bolsa / pouch","Frasco","Etiqueta","Estuche premium","Envase flexible","Otro"]},
+  {key:"structure",label:"Estructura y materiales",type:"text",placeholder:"Forma, apertura, cartón, vidrio, metal, acabado…"},
+  {key:"brandText",label:"Marca y texto exacto",type:"textarea",placeholder:"Logotipo descrito, nombre, claims y datos obligatorios; no inventar texto."},
+  {key:"style",label:"Estilo visual",type:"style"},
+  {key:"views",label:"Presentación",type:"select",options:["Vista frontal","Tres cuartos en estudio","Vistas frontal y lateral","Mockup desplegado + envase armado","Familia de productos"]},
+  {key:"avoid",label:"Evitar",type:"textarea",placeholder:"Errores de etiqueta, texto inventado, proporciones imposibles…"}
+ ],
+ advertising:[
+  {key:"offer",label:"Producto, servicio u oferta",type:"textarea",placeholder:"Qué se anuncia y cuál es el beneficio principal…",required:true},
+  {key:"audience",label:"Audiencia y tono",type:"text",placeholder:"A quién se dirige y qué emoción debe transmitir"},
+  {key:"headline",label:"Titular y CTA exactos",type:"textarea",placeholder:"Titular, llamada a la acción y condiciones que deben aparecer."},
+  {key:"placement",label:"Canal de publicación",type:"select",options:["Redes sociales","Display web","Vía pública","Revista","E-commerce","Presentación comercial","Otro"]},
+  {key:"style",label:"Estilo visual",type:"style"},
+  {key:"palette",label:"Paleta y dirección de arte",type:"text",placeholder:"Colores, contraste, referencias visuales"},
+  {key:"avoid",label:"Evitar",type:"textarea",placeholder:"Clichés de categoría, claims no confirmados, texto adicional…"}
+ ],
+ vehicles:[
+  {key:"vehicle",label:"Vehículo y características",type:"textarea",placeholder:"Tipo, marca/modelo si corresponde, época, proporciones, color y rasgos distintivos…",required:true},
+  {key:"angle",label:"Ángulo de cámara",type:"select",options:["Frontal bajo","Tres cuartos delantero","Tres cuartos trasero","Perfil lateral","Vista superior","Detalle macro","Vista dinámica en movimiento"]},
+  {key:"environment",label:"Entorno",type:"text",placeholder:"Estudio, pista, ciudad, paisaje, fondo neutro…"},
+  {key:"light",label:"Iluminación y clima",type:"select",options:["Estudio controlado","Hora dorada","Nublado difuso","Nocturno cinematográfico","Luz dura de mediodía","Personalizada"]},
+  {key:"style",label:"Estilo visual",type:"style"},
+  {key:"preserve",label:"Rasgos que deben conservarse",type:"textarea",placeholder:"Diseño de carrocería, ruedas, proporciones, insignias…"},
+  {key:"avoid",label:"Evitar",type:"textarea",placeholder:"Ruedas deformadas, piezas adicionales, perspectiva incorrecta…"}
+ ],
+ characters:[
+  {key:"character",label:"Identidad y concepto",type:"textarea",placeholder:"Quién es, función narrativa, edad aparente adulta/juvenil, personalidad y contexto ficticio…",required:true},
+  {key:"silhouette",label:"Silueta y proporciones",type:"text",placeholder:"Complexión, altura relativa, forma general…"},
+  {key:"wardrobe",label:"Vestuario y materiales",type:"textarea",placeholder:"Capas, accesorios, tejidos, paleta…"},
+  {key:"pose",label:"Pose y expresión",type:"text",placeholder:"Pose, gesto, dirección de mirada…"},
+  {key:"style",label:"Estilo visual",type:"style"},
+  {key:"views",label:"Entrega visual",type:"select",options:["Retrato de personaje","Hoja de diseño / turnaround","Cuerpo completo","Primer plano expresivo","Pose de acción","Variantes de vestuario"]},
+  {key:"avoid",label:"Evitar",type:"textarea",placeholder:"Extremidades extra, detalles inconsistentes, accesorios no pedidos…"}
+ ],
+ architecture:[
+  {key:"space",label:"Espacio y función",type:"textarea",placeholder:"Tipo de edificio o ambiente, uso, escala y necesidades…",required:true},
+  {key:"design",label:"Lenguaje arquitectónico",type:"text",placeholder:"Ej.: brutalismo cálido, modernismo tropical, minimalismo japonés"},
+  {key:"materials",label:"Materiales y acabados",type:"textarea",placeholder:"Hormigón, madera, piedra, vidrio, textiles…"},
+  {key:"camera",label:"Cámara y composición",type:"select",options:["Gran angular interior a nivel de ojo","Perspectiva frontal simétrica","Vista desde esquina","Exterior tres cuartos","Vista aérea","Axonométrica / maqueta"]},
+  {key:"light",label:"Iluminación y hora",type:"select",options:["Luz natural difusa","Sol de mañana","Hora dorada","Atardecer","Noche arquitectónica","Iluminación interior cálida"]},
+  {key:"style",label:"Estilo visual",type:"style"},
+  {key:"avoid",label:"Evitar",type:"textarea",placeholder:"Perspectivas imposibles, ventanas deformes, mobiliario redundante…"}
+ ],
+ portrait:[
+  {key:"subject",label:"Persona / concepto del retrato",type:"textarea",placeholder:"Descripción del sujeto o referencia visual que se utilizará…",required:true},
+  {key:"framing",label:"Encuadre",type:"select",options:["Primerísimo primer plano","Cabeza y hombros","Medio cuerpo","Cuerpo completo","Retrato ambiental"]},
+  {key:"expression",label:"Expresión y mirada",type:"text",placeholder:"Serena, optimista, introspectiva; mirada a cámara o fuera de campo…"},
+  {key:"lighting",label:"Iluminación",type:"select",options:["Rembrandt suave","Luz de ventana","Beauty dish","Luz lateral dramática","High-key","Low-key","Flash editorial directo"]},
+  {key:"background",label:"Fondo y vestuario",type:"text",placeholder:"Fondo, ropa, accesorios y contexto"},
+  {key:"style",label:"Acabado visual",type:"style"},
+  {key:"preserve",label:"Rasgos a preservar",type:"textarea",placeholder:"Si se usa una referencia, describí qué debe mantenerse fiel."},
+  {key:"avoid",label:"Evitar",type:"textarea",placeholder:"Piel plástica, retoque excesivo, rasgos deformados…"}
+ ],
+ editorial:[
+  {key:"story",label:"Concepto y narrativa",type:"textarea",placeholder:"Qué historia, idea o emoción debe comunicar la fotografía…",required:true},
+  {key:"subject",label:"Sujeto y acción",type:"text",placeholder:"Persona, objeto, escena o actividad"},
+  {key:"composition",label:"Composición",type:"select",options:["Minimalista con espacio negativo","Simétrica","Asimétrica editorial","Capa en primer plano","Plano cenital","Movimiento espontáneo","Bodegón narrativo"]},
+  {key:"lighting",label:"Iluminación",type:"select",options:["Luz natural suave","Flash directo","Luz cinematográfica","Contraluz","Luz dura y sombras marcadas","Mezcla de luz ambiente y flash"]},
+  {key:"lens",label:"Óptica / profundidad",type:"select",options:["24 mm gran angular","35 mm documental","50 mm natural","85 mm retrato","Macro","Profundidad de campo amplia","Profundidad de campo reducida"]},
+  {key:"style",label:"Dirección visual",type:"style"},
+  {key:"finish",label:"Acabado y tratamiento",type:"text",placeholder:"Grano, contraste, temperatura, textura, tratamiento de color…"},
+  {key:"avoid",label:"Evitar",type:"textarea",placeholder:"Estética de stock, poses artificiales, elementos de relleno…"}
+ ]
+};
+const stepDefinitions={
+ poster:[{title:"Objetivo y formato",keys:["purpose","format","posterType"]},{title:"Contenido del cartel",keys:["topic","exactText"]},{title:"Dirección visual",keys:["style","palette"]},{title:"Control creativo",keys:["avoid"]}],
+ product:[{title:"Producto",keys:["purpose","format","productType"]},{title:"Toma y materiales",keys:["shot","surface"]},{title:"Escena e iluminación",keys:["lighting","background"]},{title:"Control de fidelidad",keys:["details"]}],
+ exploded:[{title:"Objeto y estructura",keys:["purpose","format","object"]},{title:"Vista y separación",keys:["axis","view"]},{title:"Componentes",keys:["parts","labels","accuracy"]},{title:"Control técnico",keys:["avoid"]}],
+ infographic:[{title:"Objetivo y formato",keys:["purpose","format","topic"]},{title:"Contenido",keys:["facts","structure"]},{title:"Diseño de información",keys:["density","style","palette"]},{title:"Control de calidad",keys:["avoid"]}],
+ packaging:[{title:"Producto y formato",keys:["purpose","format","product"]},{title:"Envase y estructura",keys:["packageType","structure","views"]},{title:"Marca y dirección visual",keys:["brandText","style"]},{title:"Control de calidad",keys:["avoid"]}],
+ advertising:[{title:"Campaña",keys:["purpose","format","offer"]},{title:"Audiencia y mensaje",keys:["audience","headline","placement"]},{title:"Dirección de arte",keys:["style","palette"]},{title:"Control creativo",keys:["avoid"]}],
+ vehicles:[{title:"Vehículo",keys:["purpose","format","vehicle"]},{title:"Cámara y entorno",keys:["angle","environment"]},{title:"Dirección visual",keys:["light","style"]},{title:"Fidelidad",keys:["preserve","avoid"]}],
+ characters:[{title:"Concepto",keys:["purpose","format","character"]},{title:"Diseño del personaje",keys:["silhouette","wardrobe"]},{title:"Pose y estilo",keys:["pose","views","style"]},{title:"Control de consistencia",keys:["avoid"]}],
+ architecture:[{title:"Espacio",keys:["purpose","format","space"]},{title:"Lenguaje y materiales",keys:["design","materials"]},{title:"Cámara y luz",keys:["camera","light","style"]},{title:"Control espacial",keys:["avoid"]}],
+ portrait:[{title:"Sujeto y encuadre",keys:["purpose","format","subject","framing"]},{title:"Expresión y escena",keys:["expression","background"]},{title:"Luz y acabado",keys:["lighting","style"]},{title:"Fidelidad",keys:["preserve","avoid"]}],
+ editorial:[{title:"Concepto editorial",keys:["purpose","format","story","subject"]},{title:"Composición",keys:["composition","lens"]},{title:"Luz y dirección visual",keys:["lighting","style","finish"]},{title:"Control creativo",keys:["avoid"]}]
+};
+let current="poster",step=0,values={};
+const $=id=>document.getElementById(id);
+function escapeHtml(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function activeModule(){return modules.find(m=>m.id===current)}
+function getField(k){return (fields.common.concat(fields[current]||[])).find(f=>f.key===k)}
+function initNav(){for(const id of ["sideNav","mobileNav"]){const nav=$(id);nav.innerHTML="";modules.forEach(m=>{const b=document.createElement("button");b.type="button";b.dataset.id=m.id;b.innerHTML=id==="sideNav"?`<span class="ico">${m.icon}</span>${m.name}`:m.name;b.addEventListener("click",()=>switchModule(m.id));nav.appendChild(b)})}}
+function switchModule(id){saveVisibleFields();current=id;step=0;renderAll()}
+function renderAll(){const m=activeModule();$("moduleTitle").textContent=m.name;$("moduleSubtitle").textContent=m.sub;document.querySelectorAll("[data-id]").forEach(b=>b.classList.toggle("active",b.dataset.id===current));renderStep();buildPrompt()}
+function renderStep(){const steps=stepDefinitions[current],def=steps[step];$("stepCounter").textContent=`Paso ${step+1} de ${steps.length}`;$("stepbar").innerHTML=steps.map((_,i)=>`<span class="${i<=step?"on":""}"></span>`).join("");$("backBtn").disabled=step===0;$("nextBtn").textContent=step===steps.length-1?"Finalizar ✓":"Siguiente →";const all=fields.common.concat(fields[current]||[]);$("stepContent").innerHTML=`<h3 class="step-title">${def.title}</h3><p class="step-desc">Completá los campos relevantes. Los opcionales pueden quedar vacíos.</p>${def.keys.map(k=>fieldHtml(getField(k))).join("")}`;
+def.keys.forEach(k=>{const f=getField(k);if(!f)return;const el=$("f_"+k);if(!el)return;if(f.type==="style"){el.value=values[k]??"Fotografía de estudio premium";}else if(values[k]!==undefined)el.value=values[k];el.addEventListener("input",()=>{values[k]=el.value;buildPrompt()});el.addEventListener("change",()=>{values[k]=el.value;buildPrompt()})});
+}
+function fieldHtml(f){if(!f)return"";const val=values[f.key]??f.value??"";let control="";
+if(f.type==="select")control=`<select id="f_${f.key}" ${f.required?"required":""}>${f.options.map(o=>`<option ${val===o?"selected":""}>${escapeHtml(o)}</option>`).join("")}</select>`;
+else if(f.type==="style")control=`<select id="f_${f.key}">${styleCatalog.map(s=>`<option ${val===s[0]?"selected":""} value="${escapeHtml(s[0])}">${escapeHtml(s[0])}</option>`).join("")}</select><div class="hint" id="styleHint">${escapeHtml((styleCatalog.find(s=>s[0]===val)||[])[1]||"Podés describir el estilo en el campo personalizado.")}</div><div class="hint"><input id="customStyle" placeholder="Estilo personalizado (opcional)" value="${escapeHtml(values.customStyle||"")}" style="margin-top:7px;min-height:36px"></div>`;
+else if(f.type==="textarea")control=`<textarea id="f_${f.key}" placeholder="${escapeHtml(f.placeholder||"")}" ${f.required?"required":""}>${escapeHtml(val)}</textarea>`;
+else control=`<input id="f_${f.key}" value="${escapeHtml(val)}" placeholder="${escapeHtml(f.placeholder||"")}" ${f.required?"required":""}>`;
+return `<div class="field"><label for="f_${f.key}">${escapeHtml(f.label)}${f.required?' <span style="color:#c3c9ce">*</span>':""}</label>${control}</div>`}
+function saveVisibleFields(){const def=stepDefinitions[current][step];(def?.keys||[]).forEach(k=>{const el=$("f_"+k);if(el)values[k]=el.value});const custom=$("customStyle");if(custom)values.customStyle=custom.value}
+function value(k){return (values[k]||"").trim()}
+function buildPrompt(){const m=activeModule(),fmt=value("format")||"Vertical 4:5";let out=[];
+const add=(label,k)=>{if(value(k))out.push(`${label}: ${value(k)}`)};
+out.push(`Formato: ${fmt}.`);
+const purpose=value("purpose");if(purpose)out.push(`Objetivo y uso: ${purpose}.`);
+switch(current){
+case"poster":
+out.push("Qué es: cartel gráfico diseñado para comunicar el tema de forma inmediata y legible.");
+add("Tema", "topic");add("Tipo de cartel","posterType");add("Estilo","style");if(value("style")){const s=styleCatalog.find(s=>s[0]===value("style"));if(s)out.push(`Rasgos de estilo: ${s[1]}`)}if(value("customStyle"))out.push("Dirección de estilo adicional: "+value("customStyle"));add("Texto exacto", "exactText");if(value("exactText"))out.push("Reproducir únicamente los textos especificados, respetando su escritura. No añadir ningún otro texto.");add("Tipografía y paleta","palette");add("Evita","avoid");out.push("Evita también: textura desgastada, pinceladas secas, líneas de velocidad, rayos decorando elementos y subrayados de pincel, salvo que se pidan expresamente.");break;
+case"product":
+add("Producto y atributos","productType");add("Tipo de toma","shot");add("Materiales y superficie","surface");add("Iluminación","lighting");add("Fondo y contexto","background");add("Fidelidad / restricciones","details");out.push("Presentar el producto como sujeto principal, con geometría coherente, materiales legibles, sombras plausibles y reflejos controlados. No inventar logotipos, texto de etiqueta ni componentes.");break;
+case"exploded":
+add("Objeto y conjunto","object");add("Dirección de separación","axis");add("Vista técnica","view");add("Componentes y orden","parts");add("Etiquetas","labels");add("Nivel de precisión","accuracy");add("Evita","avoid");out.push("Crear una vista explosionada técnica: separar los componentes de forma ordenada siguiendo sus ejes de ensamblaje, mantener alineación espacial y proporciones coherentes, mostrar relaciones entre piezas y evitar solapamientos. No inventar mecanismos internos no especificados; cuando la construcción exacta sea desconocida, presentarla como concepto visual, no como plano de ingeniería verificado.");break;
+case"infographic":
+add("Tema y objetivo","topic");add("Datos y texto","facts");add("Estructura","structure");add("Densidad","density");add("Estilo","style");add("Paleta y tipografía","palette");add("Evita","avoid");out.push("Organizar la información en una jerarquía clara, con lectura ordenada, contraste suficiente y diagramas que correspondan al contenido. No inventar datos, cifras, fuentes ni etiquetas; priorizar legibilidad sobre decoración.");break;
+case"packaging":
+add("Producto y posicionamiento","product");add("Tipo de envase","packageType");add("Estructura y materiales","structure");add("Presentación","views");add("Marca y texto exacto","brandText");add("Estilo","style");add("Evita","avoid");out.push("Mantener una estructura de envase físicamente plausible, proporciones consistentes y jerarquía clara entre marca, producto e información. Respetar el texto suministrado y no inventar sellos, certificaciones ni claims.");break;
+case"advertising":
+add("Oferta","offer");add("Audiencia y tono","audience");add("Titular y CTA exactos","headline");add("Canal","placement");add("Estilo","style");add("Paleta y dirección de arte","palette");add("Evita","avoid");out.push("Crear una pieza publicitaria con foco visual inequívoco, mensaje legible y composición adaptada al canal. No añadir promesas, precios, condiciones ni afirmaciones no suministradas.");break;
+case"vehicles":
+add("Vehículo y características","vehicle");add("Ángulo de cámara","angle");add("Entorno","environment");add("Iluminación y clima","light");add("Estilo","style");add("Rasgos a preservar","preserve");add("Evita","avoid");out.push("Respetar proporciones mecánicas, perspectiva, contacto de neumáticos con el suelo y continuidad de carrocería. Mantener coherentes ruedas, ventanas, luces y piezas visibles.");break;
+case"characters":
+add("Identidad y concepto","character");add("Silueta y proporciones","silhouette");add("Vestuario y materiales","wardrobe");add("Pose y expresión","pose");add("Entrega visual","views");add("Estilo","style");add("Evita","avoid");out.push("Mantener consistencia de silueta, rasgos, vestuario y accesorios en toda la imagen. Las manos, articulaciones y elementos de vestuario deben ser anatómica y visualmente coherentes.");break;
+case"architecture":
+add("Espacio y función","space");add("Lenguaje arquitectónico","design");add("Materiales","materials");add("Cámara y composición","camera");add("Iluminación","light");add("Estilo","style");add("Evita","avoid");out.push("Mantener perspectiva y escala espacial plausibles, continuidad estructural y materiales coherentes con la luz. Evitar ventanas, escaleras, muebles o elementos arquitectónicos deformados o duplicados.");break;
+case"portrait":
+add("Persona / concepto","subject");add("Encuadre","framing");add("Expresión y mirada","expression");add("Fondo y vestuario","background");add("Iluminación","lighting");add("Acabado visual","style");add("Rasgos a preservar","preserve");add("Evita","avoid");out.push("Priorizar una expresión natural, rasgos faciales coherentes, textura de piel realista y luz favorecedora sin retoque excesivo. Si hay imagen de referencia, preservar los rasgos solicitados y cambiar solo los aspectos indicados.");break;
+case"editorial":
+add("Concepto y narrativa","story");add("Sujeto y acción","subject");add("Composición","composition");add("Óptica y profundidad","lens");add("Iluminación","lighting");add("Dirección visual","style");add("Acabado","finish");add("Evita","avoid");out.push("La fotografía debe sentirse intencional y narrativa, con una relación clara entre sujeto, entorno, luz y encuadre. Evitar la estética genérica de banco de imágenes y los elementos de relleno.");break;
+}
+add("Público objetivo","audience");
+out.push("Calidad: composición deliberada, jerarquía visual clara, detalles coherentes y acabado cuidado. No añadir elementos que contradigan las instrucciones.");
+$("output").value=out.join("\n");$("promptState").textContent="Actualizado";
+}
+function next(){saveVisibleFields();const steps=stepDefinitions[current];if(step<steps.length-1){step++;renderStep()}else{buildPrompt();$("promptState").textContent="Listo para copiar";} }
+function back(){saveVisibleFields();if(step>0){step--;renderStep()}}
+initNav();renderAll();
+$("nextBtn").addEventListener("click",next);$("backBtn").addEventListener("click",back);
+$("refreshBtn").addEventListener("click",()=>{saveVisibleFields();buildPrompt()});
+$("copyBtn").addEventListener("click",async()=>{try{await navigator.clipboard.writeText($("output").value);$("copyBtn").textContent="Copiado ✓";setTimeout(()=>$("copyBtn").textContent="Copiar prompt",1600)}catch(e){$("output").select();document.execCommand("copy");$("copyBtn").textContent="Copiado ✓"}});
+$("downloadBtn").addEventListener("click",()=>{const blob=new Blob([$("output").value],{type:"text/plain;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=`prompt-${current}.txt`;a.click();URL.revokeObjectURL(url)});
+$("generateBtn").addEventListener("click",async()=>{const endpoint=$("endpoint").value.trim(),prompt=$("output").value.trim()+($("apiPrompt").value.trim()?"\nInstrucción adicional: "+$("apiPrompt").value.trim():"");const msg=$("apiMessage");$("preview").style.display="none";if(!endpoint){msg.textContent="Ingresá la URL de tu endpoint backend seguro. No uses directamente una clave de OpenAI en el navegador.";return}if(!/^https:\/\//i.test(endpoint)&&!/^http:\/\/localhost(:\d+)?\//i.test(endpoint)){msg.textContent="Por seguridad, usá HTTPS para el endpoint (HTTP solo se permite en localhost durante desarrollo).";return}msg.textContent="Enviando solicitud al endpoint configurado…";try{const res=await fetch(endpoint,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({prompt})});if(!res.ok)throw new Error(`El servidor respondió HTTP ${res.status}`);const data=await res.json();if(!data.imageUrl||!/^https?:\/\//i.test(data.imageUrl))throw new Error('La respuesta debe incluir "imageUrl" con una URL HTTP(S).');$("generatedImage").src=data.imageUrl;$("preview").style.display="block";msg.textContent="Imagen recibida desde el endpoint configurado.";msg.classList.add("success")}catch(err){msg.textContent="No se pudo completar la generación: "+err.message+". Verificá el endpoint, CORS y el contrato de respuesta.";msg.classList.remove("success")}});
+</script>
+</body>
+</html>
